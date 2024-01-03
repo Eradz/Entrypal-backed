@@ -1,6 +1,16 @@
 const User = require("../../Models/UserSchema")
 const bcrypt = require("bcryptjs")
+const jwt = require("jsonwebtoken")
 
+
+//@desc GET All users controller
+const userController = async(req,res) =>{
+     const user = await User.find({})
+     res.status(200).json({message: user})
+}
+
+
+//@desc sign-up controller
 const signupController = async(req,res)=>{
     const {fullname,username, email, password, phoneNumber, reference, location} = req.body
     const user =await User.findOne({email});
@@ -19,14 +29,17 @@ const signupController = async(req,res)=>{
     }
   }
 
+
+  //@desc login controller
 const loginController =  async(req,res)=>{
     const {email, password} = req.body
     const user = await User.findOne({email})
     if(!user){
         res.status(404).json({message: "Invalid username or password"})
     }else if(user && await bcrypt.compare(password, user.password)){
-        res.status(200).json({message: `Login Successful, welcome ${user.username}`})
+        const accessToken = await jwt.sign({user}, process.env.JWT_SECRET, {expiresIn: "7d"})
+        res.status(200).json({message: `Login Successful, welcome ${user.username}`, accessToken})
     }
 }
 
-module.exports = {signupController, loginController}
+module.exports = {signupController, loginController, userController}
