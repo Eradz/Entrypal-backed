@@ -13,7 +13,7 @@ route.post("/signup", async(req,res)=>{
    }
    if(!user){
    const securePassword = await bcrypt.hash(password, 10)
-   const user = await User.create({fullname, email, password: securePassword, phoneNumber, reference, location})
+   const user = await User.create({username, fullname, email, password: securePassword, phoneNumber, reference, location})
    res.status(201).json({message: "User Successfully created", User:{name: user.fullname, id:user.id}})
    }else if(user){
       res.status(400).json({message:"User already exists "})
