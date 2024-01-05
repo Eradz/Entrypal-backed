@@ -1,6 +1,8 @@
-const errorHandler =(err, req, res, next)=>{
+const errorHandler = (error, req, res, next)=>{
     const statusCode = res.statusCode ? res.statusCode : 500
-    res.json({message: err.message, stackTrace: err.stack})
+    res.status(statusCode).json({message: error.message, stack:error.stackTrace})
+
+  next()
 }
 
 module.exports = errorHandler
