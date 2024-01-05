@@ -2,42 +2,55 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 const EventCreators = new Schema({
     type:{
-        type: String
-    },
-    fullname:{
         type: String,
+        enum: ["Individual", "Business"],
+        default: " "
     },
-    email:{
+    Fullname:{
         type: String,
+        required: [true, "Please enter your Full Name"]
     },
-    phoneNumber:{
+    Email:{
         type: String,
+        required: [true, "Please enter your Email"]
     },
-    whatsappNumber:{
+    Phone_Number:{
         type: String,
+        required: [true, "Please enter your Phone Number"]
     },
-    password:{
+    Whatsapp_Number:{
         type: String,
+        required: [true, "Please enter your Whatsapp Number"]
     },
-    address:{
-        type: String
+    Password:{
+        type: String,
+        required: [true, "Please enter your Password"]
+    },
+    Address:{
+        type: String,
+        required: [true, "Please enter your Address"]
     },
     Bank_Name:{
-        type: String
+        type: String,
+        required: [true, "Please enter your Bank Name"]
     },
     Bank_AccountNumber:{
-        type: String
+        type: String,
+        required: [true, "Please enter your Bank_AccountNumber"]
     },
     Bank_AccountName:{
-        type: String
+        type: String,
+        required: [true, "Please enter your Bank_AccountName"]
     },
     ID_Type:{
         type: String,
         enum:["Voters card", "NIN", "Drivers Licence", "International Passport"],
-        default: " "
+        default: " ",
+        required: [true, "Please identify ID Type"]
     },
     ID_Number:{
-        type: String
+        type: String,
+        required: [true, "Please enter ID Number"]
     }
 },{
     timestamps: true
