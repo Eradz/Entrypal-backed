@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema
+const {isEmail} = require("validator")
 const EventCreators = new Schema({
     type:{
         type: String,
@@ -12,7 +13,8 @@ const EventCreators = new Schema({
     },
     Email:{
         type: String,
-        required: [true, "Please enter your Email"]
+        required: [true, "Please enter your Email"],
+        validate: [isEmail, "Please enter a valid Email"]
     },
     Phone_Number:{
         type: String,
