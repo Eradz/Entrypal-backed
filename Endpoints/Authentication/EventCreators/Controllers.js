@@ -3,6 +3,8 @@ const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const AsyncHandler = require("express-async-handler")
 const emailValidator = require("../../../utils/emailValidator")
+const validator = require("validator")
+
 
 //@desc sign-up controller for eventGoers
 const signupControllerEventCreators =  AsyncHandler(async(req,res)=>{

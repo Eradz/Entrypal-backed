@@ -1,6 +1,11 @@
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 const Events = new Schema({
+    Event_creator_id:{
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "EventCreators"
+    },
     Event_name:{
         type: String,
         enum: ["Individual", "Business"],
@@ -39,5 +44,5 @@ const Events = new Schema({
     timestamps: true
 })
 
-const Event = mongoose.model("EventCreators", Events)
+const Event = mongoose.model("Events", Events)
 module.exports = Event 
