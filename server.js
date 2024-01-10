@@ -8,10 +8,11 @@ const EventCreatorsRoute = require('./Endpoints/Authentication/EventCreators/Rou
 const AsyncHandler = require("express-async-handler")
 const port = process.env.PORT
 const EventRoute = require("./Endpoints/Events/eventRoute.js")
-
+const formData = require("express-fileupload")
 
 connectdb()
 app.use(express.json())
+app.use(express.urlencoded({extended: true}));
 // app.get('/api/test', AsyncHandler((req,res) =>{
 //     const token = 'wrong'
 //         if(token === 'wrong'){

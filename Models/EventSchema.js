@@ -8,12 +8,11 @@ const Events = new Schema({
     },
     Event_name:{
         type: String,
-        enum: ["Individual", "Business"],
-        default: " "
+       required: [true, "Please enter the event name"]
     },
     Description:{
         type: String,
-        required: [true, "Please enter your Full Name"]
+        required: [true, "Please enter the event Description"]
     },
     Event_category:{
         type: String,
