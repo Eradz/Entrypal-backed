@@ -7,21 +7,28 @@ cloudinary.config({
     api_secret: process.env.API_SECRET,
     secure: true
  })
-   const CloudinarySingleupload = (image) =>{
+   const CloudinarySingleupload = async (images) =>{
     // image = req.files.image.data
-    return new Promise((resolve, reject) => {
-
-   let cld_upload_stream = cloudinary.uploader.upload_stream({ 
-   use_filename: true}, (err, result)=>{
-    if(err){
-        reject(err)
-        console.log(err)
-    }if (result){
-        resolve(result)
-        console.log(result)
+        // return new Promise((resolve, reject) => {
+        //     let cld_upload_stream = cloudinary.uploader.upload_stream({ 
+        //     use_filename: true}, (err, result)=>{
+        //      if(err){
+        //          reject(err)
+        //          console.log(err)
+        //      }if (result){
+        //          resolve(result)
+        //          console.log(result)
+        //      }
+        //  })
+        //     streamifier.createReadStream(image).pipe(cld_upload_stream);
+        //  })
+       await cloudinary.uploader.upload(images, {
+            overwrite: true,
+            invalidate: true,
+            width: 810, height: 456, crop: "fill"
+        },)
+        .then(result=>console.log(result))
+        .catch(err=>console.log(err));
     }
-})
-   streamifier.createReadStream(image).pipe(cld_upload_stream);
-})}
 
 module.exports = CloudinarySingleupload

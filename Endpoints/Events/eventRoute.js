@@ -3,6 +3,6 @@ const route = express.Router()
 const {createEvent} = require("./eventController")
 
 
-route.post("/create/:id", createEvent)
+route.post("/create", createEvent)
 
 module.exports = route

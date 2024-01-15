@@ -1,14 +1,21 @@
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 const EventGoer = new Schema({
+    googleId:{
+        type: String,
+        default: ''
+    },
     fullname:{
         type: String,
+        required: [true, "Please enter Fullname"]
     },
     username:{
         type: String,
+        required: [true, "Please enter Username"]
     },
     email:{
         type: String,
+        required: [true, "Please enter Username"]
     },
     phoneNumber:{
         type: String,
