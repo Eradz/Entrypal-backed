@@ -16,12 +16,12 @@ const Events = new Schema({
     },
     Event_category:{
         type: String,
-        enum: ["Arts Exhibition", "Business", "Birthday", "Conferences", "Corporate/Company Events", "Music Concerts", "Sports & Fitness", "Expositions", "Festivals & Fairs", "Community", "Fashion", "Food & Drinks"," Nightlife & Entertainment", "Kids & Family", "Religious Events", "Birthday", "Games & Hobbies", "Anniversaries", "Holidays", "Hangouts"],
-        required: [true, "Please identify the Category of your event"]
+        enum: {values: ["Arts Exhibition", "Business", "Birthday", "Conferences", "Corporate/Company Events", "Music Concerts", "Sports & Fitness", "Expositions", "Festivals & Fairs", "Community", "Fashion", "Food & Drinks"," Nightlife & Entertainment", "Kids & Family", "Religious Events", "Birthday", "Games & Hobbies", "Anniversaries", "Holidays", "Hangouts"] ,message: '{VALUE} is not supported' },
+        required: [true, "Please identify a Valid Category for your event"]
     },
     Time:{
         type: String,
-        required: [true, "Please enter the time in YY/MM/DD and time "]
+        required: [true, "Please enter the time in DD/MM/YY and time "]
     },
     Address:{
         type: String,
