@@ -18,6 +18,10 @@ const ticket = new schema({
     Features:{
         type: String,
         required:[true, "Please enter its features, Separating each feature with a comma(,)"]
+    },
+    Quantity:{
+        type: Number,
+        required: [true, "Please enter a particular amount of Tickets to be available"]
     }
 
 })
