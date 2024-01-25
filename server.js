@@ -1,6 +1,6 @@
 const express = require("express")
 const app = express()
-const errorHandler = require("./middleware/errorHandler.js")
+const errorHandler = require("./Middleware/errorHandler.js")
 const dotenv = require("dotenv").config()
 const connectdb = require('./db.js')
 const EventGoerRoute = require('./Endpoints/Authentication/EventGoers/Routes.js')
@@ -10,7 +10,6 @@ const port = process.env.PORT
 const EventRoute = require("./Endpoints/Events/eventRoute.js")
 const TicketRoute = require("./Endpoints/Tickets/ticketRoute.js")
 const cors = require("cors")
-const CloudinarySingleupload = require("./utils/cloudinary.js")
 const passport = require("passport")
 
 connectdb()
