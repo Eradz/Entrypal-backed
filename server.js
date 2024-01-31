@@ -9,6 +9,7 @@ const AsyncHandler = require("express-async-handler")
 const port = process.env.PORT
 const EventRoute = require("./Endpoints/Events/eventRoute.js")
 const TicketRoute = require("./Endpoints/Tickets/ticketRoute.js")
+const PaymentRoute = require("./utils/ticketPayment.js")
 const cors = require("cors")
 const passport = require("passport")
 
@@ -16,7 +17,7 @@ connectdb()
 app.use(cors())
 app.use(express.json({limit: '50mb'}))
 app.use(express.urlencoded({limit: '50mb', extended: true}));
-app.post('/api/test', async (req,res) =>{
+app.get('/api/test', async (req,res) =>{
    
     // console.log("hey")
     // const hey = Object.keys(req.body)
@@ -24,12 +25,14 @@ app.post('/api/test', async (req,res) =>{
     // console.log(bodies)
     // CloudinarySingleupload(bodies)
     // res.status(200).json({message: bodies })
-    res.status(200).json({message: req.body})
+    // res.status(200).json({message: req.body})
+    res.redirect('https://www.google.com')
 })
 app.use('/api/goer', EventGoerRoute )
 app.use('/api/creator', EventCreatorsRoute )
 app.use('/api/event', EventRoute)
 app.use('/api/ticket', TicketRoute)
+app.use('/api/payment', PaymentRoute)
 
 
 require('./utils/googleAuthenticate.js')
