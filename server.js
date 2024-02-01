@@ -17,6 +17,9 @@ connectdb()
 app.use(cors())
 app.use(express.json({limit: '50mb'}))
 app.use(express.urlencoded({limit: '50mb', extended: true}));
+app.get("/", (req, res)=>{
+    res.send("Welcome")
+})
 app.get('/api/test', async (req,res) =>{
    
     // console.log("hey")
