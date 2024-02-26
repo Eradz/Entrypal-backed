@@ -28,6 +28,9 @@ const EventGoer = new Schema({
     },
     location:{
         type: String
+    },
+    otp:{
+        type: String
     }
 },{
     timestamps: true

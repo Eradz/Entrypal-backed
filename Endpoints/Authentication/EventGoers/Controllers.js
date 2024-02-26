@@ -1,7 +1,9 @@
 const User = require("../../../Models/eventGoersSchema")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
+const {Infobip, AuthType} = require("@infobip-api/sdk")
 const AsyncHandler = require("express-async-handler")
+
 
 //@desc sign-up controller for eventGoers
 const signupControllerEventGoers =  AsyncHandler(async(req,res)=>{
@@ -18,14 +20,31 @@ const signupControllerEventGoers =  AsyncHandler(async(req,res)=>{
       throw new Error("please enter a valid email")
     }
     if(!user){
-    const securePassword = await bcrypt.hash(password, 10)
-    const user = await User.create({username, fullname, email, password: securePassword, phoneNumber, reference, location})
+      const otp =  Math.floor(1000 + Math.andom() * 9000)
+      const infobip = new Infobip({
+        baseUrl: process.env.INFOBIP_BASE_URL,
+        apiKey: process.env.INFOBIP_API_KEY,
+        authType: AuthType.ApiKey,
+      }); 
+    
+      const response = await infobip.channels.email.send({
+        to: email,
+        from: 'entrypalapp@gmail.com',
+        subject: 'Testing',
+        text: otp,
+      })
+    
+    const securePassword = await bcrypt.hash(password, 10)  
+    const user = await User.create({username, fullname, email, password: securePassword, phoneNumber, reference, location, otp})
     res.status(201).json({message: "User Successfully created", User:{name: user.fullname, id:user.id}})
     }else if(user){
       //  res.status(400).json({message:"User already exists "})
       res.status(400);
       throw new Error("User already exists")
     }
+
+  
+  
   })
 
   //@desc login controller for eventGoers
