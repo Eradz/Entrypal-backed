@@ -12,13 +12,21 @@ const TicketRoute = require("./Endpoints/Tickets/ticketRoute.js")
 const PaymentRoute = require("./utils/ticketPayment.js")
 const cors = require("cors")
 const passport = require("passport")
+const sendEmail = require("./utils/sendEmail.js")
 
 connectdb()
 app.use(cors())
 app.use(express.json({limit: '50mb'}))
 app.use(express.urlencoded({limit: '50mb', extended: true}));
 app.get("/", (req, res)=>{
-    res.send("Welcome")
+    // res.send("Welcome")
+    sendEmail()
+})
+app.get("/login", (req, res)=>{
+    res.send("Please Log in")
+})
+app.get("/success", (req, res)=>{
+    res.send("Sucessfully logged in")
 })
 app.get('/api/test', async (req,res) =>{
    
@@ -44,13 +52,15 @@ app.get('/auth/google',
       [ 'email', 'profile' ] }
 ));
 
-app.get( '/auth/google/callback',
-    passport.authenticate( 'google', {
-        successRedirect: 'http://localhost:3000',
-        failureRedirect: 'http://localhost:3000/login'
-}), (req, res) =>{
-    res.end('Logged in')
-});
+app.get('/auth/google/callback', 
+// passport.authenticate('google', {
+//     successRedirect: '/success',
+//     failureRedirect: '/login'
+//   })
+(req,res)=>{
+    res.redirect("/success")
+}
+  );;
 
 app.use(errorHandler)
 app.listen(`${port}`, ()=>{
