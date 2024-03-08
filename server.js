@@ -12,7 +12,8 @@ const TicketRoute = require("./Endpoints/Tickets/ticketRoute.js")
 const PaymentRoute = require("./utils/ticketPayment.js")
 const cors = require("cors")
 const passport = require("passport")
-const sendEmail = require("./utils/sendEmail.js")
+const {sendEmail} = require("./utils/sendEmail.js")
+const sendPug = require("./utils/SendEmailPUG.js")
 
 connectdb()
 app.use(cors())
@@ -20,7 +21,7 @@ app.use(express.json({limit: '50mb'}))
 app.use(express.urlencoded({limit: '50mb', extended: true}));
 app.get("/", (req, res)=>{
     // res.send("Welcome")
-    sendEmail()
+    sendEmail("anaguchidiebere35@gmail.com", "Testing dynamic input emails", "Hopefully Successful")
 })
 app.get("/login", (req, res)=>{
     res.send("Please Log in")
