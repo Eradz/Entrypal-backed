@@ -1,20 +1,27 @@
 const nodemailer = require("nodemailer");
+const paths = require("path")
 const ejs = require("ejs");
 require("dotenv").config();
 
 // const { EMAIL_HOST, EMAIL_PORT, EMAIL_USERNAME, EMAIL_PASSWORD } = process.env;
 const transport = nodemailer.createTransport({
   service: 'gmail',
+  host: "smtp.forwardemail.net",
+  port: 587,
+  secure: false, // upgrade later with STARTTLS
   auth: {
     user: 'anaguchidiebere@gmail.com',
     pass: 'fyig vyip llqy pexo'
+    // user: 'notifications@entrypalapp.com',
+    // pass: 'EntryPalNotifications2000$'
   }
 });
+const directory = paths.join( __dirname, "../views/welcome.ejs")
 
-const sendEmail = (receiver, subject, content) => {
+const sendEmail = (receiver, name, subject, content) => {
   ejs.renderFile(
-    __dirname + "/templates/welcome.ejs",
-    { receiver, content },
+    directory,
+    { content, name },
     (err, data) => {
       if (err) {
         console.log(err);
@@ -41,32 +48,3 @@ module.exports = {
   sendEmail,
 };
 
-// var nodemailer = require('nodemailer');
-
-// const sendEmail =()=>{
-//     var transporter = nodemailer.createTransport({
-//       service: 'gmail',
-//       auth: {
-//         user: 'anaguchidiebere@gmail.com',
-//         pass: 'fyig vyip llqy pexo'
-//       }
-//     });
-    
-//     var mailOptions = {
-//       from: 'anaguchidiebere@gmail.com',
-//       to: 'anaguchidiebere35@gmail.com',
-//       subject: 'Sending Email using Node.js',
-//       text: `Testing using Gail to Gmail, If it'll be stored as spam/update/primary message`
-//     };
-    
-//     transporter.sendMail(mailOptions, function(error, info){
-//       if (error) {
-//         console.log(error);
-//       } else {
-//         console.log('Email sent: ' + info.response);
-//       }
-//     });
-
-// }
-
-// module.exports = sendEmail

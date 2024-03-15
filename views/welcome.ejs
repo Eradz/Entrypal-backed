@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Hello</title>
+  </head>
+  <body>
+    <style>
+      body { 
+       display: flex;
+       flex-direction: column;
+     }
+     h3{
+      margin: auto;
+     }
+     .header_image{
+      margin-bottom: 20px;
+     }
+     a{
+      text-decoration: none;
+      text-decoration-color: none;
+     }
+     .otp-box{
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       gap: 10px;
+      }
+      .otp{
+       font-size: 40px;
+       background-color: #F5F5F5;
+       width: 30%;
+       text-align: center;
+       border-radius: 10px;
+       letter-spacing: 10px;
+      }
+      .otp-box img{
+       margin-top: auto;
+       margin-bottom: auto;
+      }
+     .let-us-know{
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 40px;
+     }
+     .logo_image{
+      margin: auto;
+      width: 18%;
+     }
+     .social_icons{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 50px;
+      gap:30px;
+     }
+     .footer{
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      font-size: 10px;
+      gap: -10px;
+      margin-top: 20px;
+      margin-bottom: 40px;
+     }
+     .footer p{
+      margin-top: -3px;
+    }
+    </style>
+    <img class="header_image" src="/assets/Header.svg" alt="Entrypal_logo"></img>
+    <h3>Account verification</h3>
+    <p>Hello <% name %>;</p>
+    <p class="class">
+      Please use the code below to verify your account. This code is valid for
+      30 mins.
+    </p>
+    <div class="otp-box">
+      <p class="otp"> <% content%> </p>
+      <img src="/assets/Copy.svg" alt="Click to copy"></img>
+    </div>
+    <div class="let-us-know">
+      <p>Please if this wasnt you, Please ignore this message or</p>
+      <a href="www.google.com">let us know</a>
+    </div>
+    <img class="logo_image" src="/assets/Logo.svg"></img>
+    <div class="social_icons">
+      <a href=""><img class="icon_image" src="/assets/mdi_github.svg"></img></a>
+      <a href=""><img class="icon_image" src="/assets/ri_twitter-fill.svg"></img></a>
+      <a href="http://"><img class="icon_image" src="/assets/ri_instagram-line.svg"></img></a>
+      <a href="http://"><img class="icon_image" src="/assets/mdi_linkedin.svg"></img></a>
+    </div>
+    <div class="footer">
+      <p>www.entrypalapp.com</p>
+      <p>© Entrypal Apps Limited (RC 1889170) Awka,NG 420112</p>
+      <p>Cancel Subscription</p>
+    </div>
+  </body>
+</html>
