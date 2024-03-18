@@ -17,7 +17,9 @@ const transport = nodemailer.createTransport({
   }
 });
 const directory = paths.join( __dirname, "../views/welcome.ejs")
-
+const logoDir = paths.join( __dirname, "../public/assets/Logo.png")
+const headerDir = paths.join( __dirname, "../public/assets/Header.png")
+const copyDir = paths.join( __dirname, "../public/assets/Copy.png")
 const sendEmail = (receiver, name, subject, content) => {
   ejs.renderFile(
     directory,
@@ -27,10 +29,27 @@ const sendEmail = (receiver, name, subject, content) => {
         console.log(err);
       } else {
         var mailOptions = {
-          from: "email_username",
+          from: "Entrypal",
           to: receiver,
           subject: subject,
           html: data,
+          attachments:[
+            {
+            filename:"Logo.png",
+            path: logoDir,
+            cid: "logo"
+          },
+            {
+            filename:"Header.png",
+            path: headerDir,
+            cid: "header"
+          },
+            {
+            filename:"Copy.png",
+            path: copyDir,
+            cid: "copy"
+          },
+        ]
         };
 
         transport.sendMail(mailOptions, (error, info) => {

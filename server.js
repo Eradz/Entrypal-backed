@@ -12,7 +12,6 @@ const PaymentRoute = require("./utils/ticketPayment.js")
 const cors = require("cors")
 const path = require('node:path')
 const passport = require("passport")
-const {sendEmail} = require("./utils/sendEmail.js")
 
 app.set("view engine", "ejs");
 connectdb()
@@ -21,8 +20,8 @@ app.use(express.json({limit: '50mb'}))
 app.use(express.urlencoded({limit: '50mb', extended: true}));
 app.use(express.static("public")); 
 app.get("/", (req, res)=>{
-    // res.send("welcome")
-    res.render("welcome.ejs")
+    //  res.send("welcome")
+     res.render("welcome")
 })
 app.use('/api/goer', EventGoerRoute )
 app.use('/api/creator', EventCreatorsRoute )
