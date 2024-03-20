@@ -38,5 +38,17 @@ const loginControllerEventCreators =  AsyncHandler(async(req,res)=>{
     }
 })
 
-module.exports = {signupControllerEventCreators, loginControllerEventCreators}
+//@desc Get all eventgoers
+const getAllEventCreators = AsyncHandler(async(req,res)=>{
+  const users = await EventCreator.find()
+  res.status(200).json({message: users})
+})
+
+const deleteEventCreator = AsyncHandler(async(req,res)=>{
+  const id = req.params
+  const user = await EventCreator.findByIdAndDelete(id)
+  res.status(200).json({message: `${user.fullname} has been sucessfully deleted`})
+})
+
+module.exports = {signupControllerEventCreators, loginControllerEventCreators, getAllEventCreators, deleteEventCreator}
     
