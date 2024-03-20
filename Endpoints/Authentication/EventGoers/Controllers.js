@@ -1,7 +1,6 @@
 const User = require("../../../Models/eventGoersSchema")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
-const {Infobip, AuthType} = require("@infobip-api/sdk")
 const AsyncHandler = require("express-async-handler")
 const { sendEmail } = require("../../../utils/sendEmail")
 
@@ -59,7 +58,7 @@ const getAllEventGoers = AsyncHandler(async(req,res)=>{
 
 //@desc Delete a particular Eveng Goer
 const deleteEventGoer = AsyncHandler(async(req,res)=>{
-  const id = req.params
+  const {id}= req.params
   const user = await User.findByIdAndDelete(id)
   res.status(200).json({message: `${user.fullname} has been sucessfully deleted`})
 })

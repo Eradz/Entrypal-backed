@@ -14,14 +14,14 @@ const path = require('node:path')
 const passport = require("passport")
 
 app.set("view engine", "ejs");
-connectdb()
+// connectdb()
 app.use(cors())
 app.use(express.json({limit: '50mb'}))
 app.use(express.urlencoded({limit: '50mb', extended: true}));
 app.use(express.static("public")); 
 app.get("/", (req, res)=>{
     //  res.send("welcome")
-     res.render("welcome")
+     res.render("example")
 })
 app.use('/api/goer', EventGoerRoute )
 app.use('/api/creator', EventCreatorsRoute )
