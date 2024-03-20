@@ -59,7 +59,7 @@ const getAllEventGoers = AsyncHandler(async(req,res)=>{
 //@desc Delete a particular Eveng Goer
 const deleteEventGoer = AsyncHandler(async(req,res)=>{
   const {id}= req.params
-  const user = await User.findByIdAndDelete(id)
+  const user = await User.findOneAndDelete({ _id: id })
   res.status(200).json({message: `${user.fullname} has been sucessfully deleted`})
 })
 
