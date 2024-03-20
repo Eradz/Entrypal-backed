@@ -20,6 +20,10 @@ const directory = paths.join( __dirname, "../views/welcome.ejs")
 const logoDir = paths.join( __dirname, "../public/assets/Logo.png")
 const headerDir = paths.join( __dirname, "../public/assets/Header.png")
 const copyDir = paths.join( __dirname, "../public/assets/Copy.png")
+const githubDir = paths.join( __dirname, "../views/welcome.ejs")
+const twitterDir = paths.join( __dirname, "../public/assets/Logo.png")
+const instagramDir = paths.join( __dirname, "../public/assets/Header.png")
+const linkedinDir = paths.join( __dirname, "../public/assets/Copy.png")
 const sendEmail = (receiver, name, subject, content) => {
   ejs.renderFile(
     directory,
@@ -48,6 +52,26 @@ const sendEmail = (receiver, name, subject, content) => {
             filename:"Copy.png",
             path: copyDir,
             cid: "copy"
+          },
+            {
+            filename:"ri_instagram-line.png",
+            path: instagramDir,
+            cid: "instagram"
+          },
+            {
+            filename:"ri_twitter-fill.png",
+            path: twitterDir,
+            cid: "twitter"
+          },
+            {
+            filename:"mdi_linkedin.png",
+            path: linkedinDir,
+            cid: "linkedin"
+          },
+            {
+            filename:"mdi_github.png",
+            path: githubDir,
+            cid: "github"
           },
         ]
         };
