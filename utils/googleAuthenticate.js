@@ -7,10 +7,15 @@ passport.use(new GoogleStrategy({
     callbackURL: "http://localhost:5000/auth/google/callback",
     passReqToCallback   : true
   },
-  async function(request, accessToken, refreshToken, profile, done) {
+  async function verify(request, accessToken, refreshToken, profile, done) {
         const {id, displayName, email, given_name } = profile
-       const user = await EventGoer.create({fullname: displayName, googleId: id, email, username: given_name  })
-       return done(user)
+        const existingUser = await EventGoer.findOne({googleId: id})
+        if(existingUser){
+         return  done(null, existingUser)
+        } else{
+          const user = await EventGoer.create({fullname: displayName, googleId: id, email, username: given_name  })
+          return done(null, user)
+        }
   }
 ));
 /**
