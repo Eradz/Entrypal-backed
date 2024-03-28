@@ -66,7 +66,7 @@ app.get('/auth/google/callback',
 passport.authenticate('google', {
     failureRedirect: '/login'
   }), (req,res)=>{
-    res.redirect("https://entrypalapp.com")
+    res.redirect("https://www.entrypalapp.com")
   })
 
 
