@@ -24,9 +24,8 @@ app.use(session({
   secret: 'suii',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true }
 }))
-app.use(passport.session())
+app.use(passport.authenticate('session'))
 app.use(passport.initialize())
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -41,7 +40,7 @@ app.get("/", (req, res)=>{
 })
 app.get("/success", (req, res)=>{
     //  res.send("welcome")
-    res.redirect("https://entrypalapp.com")
+    res.redirect("https://www.entrypalapp.com")
 })
 app.get("/login", (req, res)=>{
     //  res.send("welcome")
@@ -52,7 +51,6 @@ app.get("/logout",(req,res)=>{
     if (err) { return next(err); }
     res.redirect('/');
   })
-  
 })
 app.use('/api/goer', EventGoerRoute )
 app.use('/api/creator', EventCreatorsRoute )
