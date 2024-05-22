@@ -10,7 +10,8 @@ passport.use(new GoogleStrategy({
   async function verify(request, accessToken, refreshToken, profile, done) {
         const {id, displayName, email, given_name } = profile
         const existingUser = await EventGoer.findOne({googleId: id})
-        if(existingUser){
+        const existingUseremail = await EventGoer.findOne({email})
+        if(existingUser || existingUseremail){
          return  done(null, existingUser)
         } else{
           const user = await EventGoer.create({fullname: displayName, googleId: id, email, username: given_name  })
