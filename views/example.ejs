@@ -34,6 +34,9 @@
        width: 25px;
        height: 25px;
       }
+      .otp-box img:hover{
+        cursor: pointer;
+      }
      .let-us-know{
       display: flex;
       align-items: center;
@@ -77,7 +80,7 @@
     </p>
     <div class="otp-box">
       <p class="otp"> content </p>
-      <img  src="/assets/Copy.png" alt="Click to copy"></img>
+      <img  src="/assets/Copy.png" alt="Click to copy" onclick="copyToClipboard()"></img>
     </div>
     <div class="let-us-know">
       <p>Please if this wasnt you, Please ignore this message or<a href="www.google.com">let us know</a></p>
@@ -94,5 +97,12 @@
       <p>© Entrypal Apps Limited (RC 1889170) Awka,NG 420112</p>
       <p>Cancel Subscription</p>
     </div>
+    <script>
+      function copyToClipboard(){
+        let content = 'hello'
+        navigator.clipboard.writeText(content)
+        alert("Copied: " + content)
+      }
+    </script>
   </body>
 </html>
