@@ -13,6 +13,8 @@ const cors = require("cors")
 const path = require('node:path')
 const passport = require("passport")
 const session = require('express-session')
+const qrCode = require("./utils/QRcode.js")
+const qrCodeGenerator = require("./utils/QRcode.js")
 
 app.set("view engine", "ejs");
 connectdb()
@@ -37,6 +39,10 @@ passport.deserializeUser(function(user, done) {
 app.get("/", (req, res)=>{
     //  res.send("welcome")
      res.render("example")
+})
+app.get('/qrcode', async(req,res)=>{
+  const result = await qrCodeGenerator("Chidiebere")
+  res.send(result)
 })
 app.get("/success", (req, res)=>{
     //  res.send("welcome")

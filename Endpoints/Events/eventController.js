@@ -1,7 +1,6 @@
 const AsyncHandler = require("express-async-handler")
 const Event = require("../../Models/EventSchema")
 const eventCreators = require("../../Models/eventCreatorsSchema")
-const uploadImage = require("../../utils/cloudinary")
 
 //@desc Create an Event
 const createEvent = AsyncHandler(async(req, res) =>{

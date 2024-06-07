@@ -29,6 +29,7 @@
     "nodemon": "^3.0.2",
     "passport": "^0.7.0",
     "passport-google-oauth2": "^0.2.0",
+    "qrcode": "^1.5.3",
     "streamifier": "^0.1.1"
   }
 }
