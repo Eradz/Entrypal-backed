@@ -22,6 +22,14 @@ const ticket = new schema({
     Quantity:{
         type: Number,
         required: [true, "Please enter a particular amount of Tickets to be available"]
+    },
+    qrcode:{
+        type: String,
+        default: "",
+    },
+    event_goer:{
+        type: String,
+        default: ""
     }
 
 })

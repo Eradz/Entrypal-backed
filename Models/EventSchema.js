@@ -39,6 +39,12 @@ const Events = new Schema({
         type: String,
         required: [true, "Please add a Secondary Image"]
     },
+    event_goers_id:{
+        type: Array
+    },
+    currently_in_attendance:{
+        type:Array
+    }
 },{
     timestamps: true
 })

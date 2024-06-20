@@ -8,12 +8,11 @@ const EventCreatorsRoute = require('./Endpoints/Authentication/EventCreators/Rou
 const port = process.env.PORT
 const EventRoute = require("./Endpoints/Events/eventRoute.js")
 const TicketRoute = require("./Endpoints/Tickets/ticketRoute.js")
-const PaymentRoute = require("./utils/ticketPayment.js")
+// const PaymentRoute = require("./utils/ticketPayment.js")
 const cors = require("cors")
 const path = require('node:path')
 const passport = require("passport")
 const session = require('express-session')
-const qrCode = require("./utils/QRcode.js")
 const qrCodeGenerator = require("./utils/QRcode.js")
 
 app.set("view engine", "ejs");
@@ -62,7 +61,7 @@ app.use('/api/goer', EventGoerRoute )
 app.use('/api/creator', EventCreatorsRoute )
 app.use('/api/event', EventRoute)
 app.use('/api/ticket', TicketRoute)
-app.use('/api/payment', PaymentRoute)
+// app.use('/api/payment', PaymentRoute)
 
 
 require('./utils/googleAuthenticate.js')

@@ -6,7 +6,7 @@ const emailValidator = require("../../../utils/emailValidator")
 
 
 
-//@desc sign-up controller for eventGoers
+//@desc sign-up controller for event Creators
 const signupControllerEventCreators =  AsyncHandler(async(req,res)=>{
     const {type, Fullname, Email, Password, Phone_Number, Whatsapp_Number, Address, Bank_Name, Bank_AccountNumber, Bank_AccountName, ID_Type, ID_Number } = req.body
     const user =await EventCreator.findOne({Email});
@@ -25,7 +25,7 @@ const signupControllerEventCreators =  AsyncHandler(async(req,res)=>{
     }
   })
 
-  //@desc login controller for eventGoers
+  //@desc login controller for event Creators
 const loginControllerEventCreators =  AsyncHandler(async(req,res)=>{
     const {Email, Password} = req.body
     const user = await EventCreator.findOne({Email})
@@ -38,7 +38,7 @@ const loginControllerEventCreators =  AsyncHandler(async(req,res)=>{
     }
 })
 
-//@desc Get all eventgoers
+//@desc Get all Event Creators
 const getAllEventCreators = AsyncHandler(async(req,res)=>{
   const users = await EventCreator.find()
   res.status(200).json({message: users})
