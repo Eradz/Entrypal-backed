@@ -31,6 +31,9 @@ const EventGoer = new Schema({
     },
     otp:{
         type: String
+    },
+    ticket:{
+        type: Array
     }
 },{
     timestamps: true

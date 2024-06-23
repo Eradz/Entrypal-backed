@@ -27,9 +27,9 @@ const ticket = new schema({
         type: String,
         default: "",
     },
-    event_goer:{
-        type: String,
-        default: ""
+    event_goers:{
+        type: Array,
+        default: []
     }
 
 })

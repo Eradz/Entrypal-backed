@@ -17,6 +17,7 @@ const ticketPayment = async(email, amount, metadata)=>{
     'Authorization': `Bearer ${secretKey}`
     }
   } )
+  console.log(reference);
   console.log(response)
    return (response.data.data.authorization_url)
 }
