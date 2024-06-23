@@ -32,7 +32,7 @@ const EventGoer = new Schema({
     otp:{
         type: String
     },
-    ticket:{
+    tickets:{
         type: Array
     }
 },{

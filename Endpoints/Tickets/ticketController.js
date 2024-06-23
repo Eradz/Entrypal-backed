@@ -59,20 +59,7 @@ const ticketPayment = AsyncHandler(async(req,res) =>{
     res.status(200).json({message:payment_process})
     // res.status(200).redirect(payment_process)
     
-    /* sample of code to extract details
-    let tickets = ["Regular_ticket_id 2", "vvip_ticket_id 1", "Vip_ticket_id 2"]
-const ticket_details = tickets.map((ticket,i)=>{
-    let ticket_id = ticket.split(" ")
-    if(i != tickets.length - 1){
-        return(` ${ticket_id[1]} ${ticket_id[0]}`)
-    } else{
-     return(` ${ticket_id[1]} ${ticket_id[0]}`)   
-    }
-    
-})
-console.log(`User bought${ticket_details}`)
-VM702:11 User bought 2 Regular_ticket_id, 1 vvip_ticket_id, 2 Vip_ticket_id
-    */
+   
 
 })
 //ticket verification and database integration
@@ -90,13 +77,31 @@ const verifyPayment = AsyncHandler(async(req,res)=>{
     // From the metadata gotten from the response we get the EventGoerId and add it o the ticket model
     // then we update the ticket array in the EventGoer model with the ticket id and number eg ["Regular_ticket_id 2", "vvip_ticket_id 1", "Vip_ticket_id 2"]
     const {tickets, eventGoerId} = response.data.data.metadata
-        // This gives me the array of tickets the user paid for        
-      const update = { "$push": { "event_goers": eventGoerId } }
-      const ticketsUpdate = await Promise.all(tickets.map(async(ticket)=>{return await Ticket.findByIdAndUpdate(ticket.split(" ")[0], update)}))
-      console.log(ticketsUpdate);
-      res.status(200).json({message: ticketsUpdate})
+        // This gives the array of tickets the user paid for and updates the tickets model with the user who bought the tickets       
+      const updateForTicket = { "$push": { "event_goers": eventGoerId } }
+      await Promise.all(tickets.map(async(ticket)=>{return await Ticket.findByIdAndUpdate(ticket.split(" ")[0], updateForTicket)}))
+      // The user would have a property(ticket) that shows the type of ticket he bought and the uantity for each, it will be an array i.e ["Regular_ticket_id 2", "vvip_ticket_id 1", "Vip_ticket_id 2"]
+    await Promise.all(tickets.map(async(ticket)=>{return await EventGoer.findByIdAndUpdate(eventGoerId,{"$push": {"tickets": ticket}} )}))
+    // Sending message to the frontend
+    const ticket_details = tickets.map((ticket,i)=>{
+        let ticket_id = ticket.split(" ")
+        if(i != tickets.length - 1){
+            return(` ${ticket_id[1]} ${ticket_id[0]}`)
+        } else{
+         return(` ${ticket_id[1]} ${ticket_id[0]}`)   
+        }
+        
+    })
+    console.log(`You have successfully bought${ticket_details}`)
+    res.status(200).json({message: `You have successfully bought${ticket_details}`})
 
-    
+       /* sample of code to extract details
+    let tickets = ["Regular_ticket_id 2", "vvip_ticket_id 1", "Vip_ticket_id 2"]
+
+
+VM702:11 User bought 2 Regular_ticket_id, 1 vvip_ticket_id, 2 Vip_ticket_id
+    */
+      
     })
     /*
     {

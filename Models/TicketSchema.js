@@ -23,6 +23,9 @@ const ticket = new schema({
         type: Number,
         required: [true, "Please enter a particular amount of Tickets to be available"]
     },
+    qtyBought:{
+        type: Number
+    },
     qrcode:{
         type: String,
         default: "",
