@@ -3,14 +3,23 @@ const AsyncHandler = require("express-async-handler")
 const Event = require("../../Models/EventSchema")
 const EventGoer = require("../../Models/eventGoersSchema")
 const initializePayment  = require("../../utils/ticketPayment")
+const axios = require("axios")
+
+
+//@desc GET All tickets in DATABASE
+//ROUTE GET
+const getAllTickets = AsyncHandler( async(req,res) =>{
+    const ticket = await Ticket.find({})
+    res.status(200).json({message: ticket})
+
+})
 //@desc GET tickets for a particular event
 //ROUTE GET
-const getTickets = AsyncHandler( async(req,res) =>{
-    const {Event_name} = req.body
-    const ticket = Ticket.findOne({Event_name})
-    if(!ticket){
+const getEventTickets = AsyncHandler( async(req,res) =>{
+    const {Event_id} = req.params
+    const ticket = await Ticket.find({Event_id})
+    res.status(200).json({message: ticket})
 
-    }
 })
 
 //@desc CREATE ticket route
@@ -42,13 +51,12 @@ const ticketPayment = AsyncHandler(async(req,res) =>{
     const {totalAmount, tickets} = req.body
     // const ticket = Ticket.findById(ticketId)
     const eventGoer = await EventGoer.findById(eventGoerId)
-
-    const metadata = {tickets, eventGoerId} ;
-    const payment_process = await initializePayment(eventGoer.email, totalAmount, metadata)
-    console.log(payment_process); 
-    res.status(200).json({message: payment_process}).redirect(payment_process)
     // tickets in the req.body is an array of strings bearing the ticket ids(if he bought more than 1) and quantity bought
     //eg ["Regular_ticket_id 2", "vvip_ticket_id 1", "Vip_ticket_id 2"]
+    const metadata = {tickets, eventGoerId} ;
+    const payment_process = await initializePayment(eventGoer.email, totalAmount, metadata)
+    console.log(payment_process);
+    res.status(200).redirect(payment_process)
     /* sample of code to extract details
     let tickets = ["Regular_ticket_id 2", "vvip_ticket_id 1", "Vip_ticket_id 2"]
 const ticket_details = tickets.map((ticket,i)=>{
@@ -66,7 +74,15 @@ VM702:11 User bought 2 Regular_ticket_id, 1 vvip_ticket_id, 2 Vip_ticket_id
 
 })
 //ticket verification and database integration
-const verifyPayment = ()=>{
+const verifyPayment = AsyncHandler(async(req,res)=>{
+    const secretKey = process.env.PAYSTACK_SECRET_KEY
 
-}
-module.exports = {createTicket, ticketPayment, verifyPayment}
+    const {reference} = req.params
+    const response = await axios.get(`https://api.paystack.co/transaction/verify/${reference}`, {headers: {
+        'Authorization': `Bearer ${secretKey}`
+        }
+})
+    console.log(response.data.data)
+    res.status(200).send(response.data.data)
+})
+module.exports = {createTicket, ticketPayment, verifyPayment, getAllTickets, getEventTickets}

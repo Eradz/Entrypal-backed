@@ -81,6 +81,24 @@
     <div class="otp-box">
       <p class="otp"> content </p>
       <img  src="/assets/Copy.png" alt="Click to copy" onclick="copyToClipboard()"></img>
+      <form id="register" method="post" action="/api/ticket/initializepayment/665c6218a9e308166a5a67ff">    
+        <label><b>total amount     
+        </b>    
+        </label>    
+        <input type="text" name="totalAmount" id="totalAmount" placeholder="totalAmount">    
+        <br><br>    
+        <label><b>tickets     
+        </b>    
+        </label>    
+        <input type="tickets" name="tickets" id="tickets" placeholder="tickets">    
+        <br><br>
+        <label><b>Confirm Password     
+        </b>    
+        </label>    
+        <input type="Password" name="confirm" id="confirm" placeholder="Password Repeat">    
+        <br><br>      
+        <input type="submit" name="submit" id="submit" value="Register">
+    </form> 
     </div>
     <div class="let-us-know">
       <p>Please if this wasnt you, Please ignore this message or<a href="www.google.com">let us know</a></p>
@@ -99,9 +117,12 @@
     </div>
     <script>
       function copyToClipboard(){
-        let content = 'hello'
-        navigator.clipboard.writeText(content)
-        alert("Copied: " + content)
+        // let content = 'hello'
+        // navigator.clipboard.writeText(content)
+        // alert("Copied: " + content)
+        fetch('http://localhost:5000/api/ticket/initializepayment/665c6218a9e308166a5a67ff', {
+	method: 'POST'
+})
       }
     </script>
   </body>

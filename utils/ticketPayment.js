@@ -3,11 +3,14 @@ const axios = require("axios")
 const ticketPayment = async(email, amount, metadata)=>{
     const APIkey = process.env.PAYSTACK_API_KEY
     const secretKey = process.env.PAYSTACK_SECRET_KEY
+    const reference = Date.now()
     const data = {
         email:email, 
         amount: amount * 100, 
         APIkey,
-        metadata: JSON.stringify(metadata)
+        metadata: JSON.stringify(metadata),
+        reference,
+        callback_url: `http://localhost:5000/api/ticket/verifypayment/${reference}`
     }
    const response = await axios.post("https://api.paystack.co/transaction/initialize", data,  {
     headers: {
@@ -16,7 +19,6 @@ const ticketPayment = async(email, amount, metadata)=>{
   } )
   console.log(response)
    return (response.data.data.authorization_url)
-//    res.redirect(response.data.data.authorization_url)
 }
 
 /* response gotten from paystack
