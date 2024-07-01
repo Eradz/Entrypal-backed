@@ -80,25 +80,21 @@ const verifyPayment = AsyncHandler(async(req,res)=>{
         // This gives the array of tickets the user paid for and updates the tickets model with the user who bought the tickets       
       const updateForTicket = { "$push": { "event_goers": eventGoerId } }
       await Promise.all(tickets.map(async(ticket)=>{return await Ticket.findByIdAndUpdate(ticket.split(" ")[0], updateForTicket)}))
-      // The user would have a property(ticket) that shows the type of ticket he bought and the uantity for each, it will be an array i.e ["Regular_ticket_id 2", "vvip_ticket_id 1", "Vip_ticket_id 2"]
+      // The user would have a property(ticket) that shows the type of ticket he bought and the quantity for each, it will be an array i.e ["Regular_ticket_id 2", "vvip_ticket_id 1", "Vip_ticket_id 2"]
     await Promise.all(tickets.map(async(ticket)=>{return await EventGoer.findByIdAndUpdate(eventGoerId,{"$push": {"tickets": ticket}} )}))
-    // Sending message to the frontend
-    const ticket_details = tickets.map((ticket,i)=>{
-        let ticket_id = ticket.split(" ")
-        if(i != tickets.length - 1){
-            return(` ${ticket_id[1]} ${ticket_id[0]}`)
-        } else{
-         return(` ${ticket_id[1]} ${ticket_id[0]}`)   
-        }
-        
-    })
-    console.log(`You have successfully bought${ticket_details}`)
-    res.status(200).json({message: `You have successfully bought${ticket_details}`})
 
        /* sample of code to extract details
     let tickets = ["Regular_ticket_id 2", "vvip_ticket_id 1", "Vip_ticket_id 2"]
-
-
+const ticket_details = tickets.map((ticket,i)=>{
+    let ticket_id = ticket.split(" ")
+    if(i != tickets.length - 1){
+        return(` ${ticket_id[1]} ${ticket_id[0]}`)
+    } else{
+     return(` ${ticket_id[1]} ${ticket_id[0]}`)   
+    }
+    
+})
+console.log(`User bought${ticket_details}`)
 VM702:11 User bought 2 Regular_ticket_id, 1 vvip_ticket_id, 2 Vip_ticket_id
     */
       
