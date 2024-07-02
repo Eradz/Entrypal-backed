@@ -19,6 +19,7 @@ const transport = nodemailer.createTransport({
 const directory = paths.join( __dirname, "../views/welcome.ejs")
 const logoDir = paths.join( __dirname, "../public/assets/Logo.png")
 const headerDir = paths.join( __dirname, "../public/assets/Header.png")
+const frameDir = paths.join( __dirname, "../public/assets/Frame.png")
 const copyDir = paths.join( __dirname, "../public/assets/Copy.png")
 const githubDir = paths.join( __dirname, "../public/assets/mdi_github.png")
 const twitterDir = paths.join( __dirname, "../public/assets/ri_twitter-fill.png")
@@ -73,6 +74,11 @@ const sendEmail = (receiver, name, subject, content) => {
             path: githubDir,
             cid: "github"
           },
+        //   {
+        //   filename:"Frame.png",
+        //   path: frameDir,
+        //   cid: "frame"
+        // },
         ]
         };
 

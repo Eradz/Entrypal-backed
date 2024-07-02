@@ -42,8 +42,8 @@ app.get("/", (req, res)=>{
 })
 app.get("/onsignup", (req, res)=>{
     //  res.send("welcome")
-    sendEmail("anaguchidiebere@gmail.com", "chidi", "suiii", "content")
-     res.render("dynamic")
+    sendEmail("anaguchidiebere@gmail.com", "chidi", "OnTicketPurchase", "content")
+     res.render("OnTicketPurchase")
 })
 app.get('/qrcode', async(req,res)=>{
   const result = await qrCodeGenerator("Chidiebere")
