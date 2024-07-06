@@ -26,15 +26,6 @@ const ticket = new schema({
     qtyBought:{
         type: Number
     },
-    qrcode:{
-        type: String,
-        default: "",
-    },
-    event_goers:{
-        type: Array,
-        default: []
-    }
-
 })
 
 const Ticket = mongoose.model("tickets", ticket)

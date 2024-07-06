@@ -4,6 +4,7 @@ const Event = require("../../Models/EventSchema")
 const EventGoer = require("../../Models/eventGoersSchema")
 const initializePayment  = require("../../utils/ticketPayment")
 const axios = require("axios")
+const TicketReferenceModel = require("../../Models/TicketReferenceSchema")
 
 
 //@desc GET All tickets in DATABASE
@@ -48,12 +49,15 @@ const createTicket =  AsyncHandler( async(req, res) =>{
 // route POST
 const ticketPayment = AsyncHandler(async(req,res) =>{
     const {eventGoerId} = req.params
-    const {totalAmount, tickets} = req.body
+    const {data} = req.body
     // const ticket = Ticket.findById(ticketId)
     const eventGoer = await EventGoer.findById(eventGoerId)
     // tickets in the req.body is an array of strings bearing the ticket ids(if he bought more than 1) and quantity bought
-    //eg ["Regular_ticket_id 2", "vvip_ticket_id 1", "Vip_ticket_id 2"]
-    const metadata = {tickets, eventGoerId} ;
+    //eg const data = [{Name: "Anagu Chidiebere Andrew",  Email: "Anaguchidiebere@gmail.com",	TicketId: 26613137379317 },
+    //{Name: "Adibe Chukwuemeka Joshua" ,  Email: "chukwuemeka@gmail.com",	TicketId: 26613137379317},
+    //{Name: "Edeh Johnpaul Chukwuemeka",  Email:  "Edehjohnpaul@gmail.com", TicketId: 26613137379317 },
+    //{Name: "Ogbu Vincent",  Email: "VincentOgbu@gmail.com",	TicketId: 26613137379317},]
+    const metadata = {data, eventGoerId} ;
     const payment_process = await initializePayment(eventGoer.email, totalAmount, metadata)
     console.log(payment_process);
     res.status(200).json({message:payment_process})
@@ -74,14 +78,15 @@ const verifyPayment = AsyncHandler(async(req,res)=>{
     if(response.data.data.status !== "success"){
         res.status(400).json({message: "Payment Failed"})
     }
-    // From the metadata gotten from the response we get the EventGoerId and add it o the ticket model
-    // then we update the ticket array in the EventGoer model with the ticket id and number eg ["Regular_ticket_id 2", "vvip_ticket_id 1", "Vip_ticket_id 2"]
-    const {tickets, eventGoerId} = response.data.data.metadata
-        // This gives the array of tickets the user paid for and updates the tickets model with the user who bought the tickets       
-      const updateForTicket = { "$push": { "event_goers": eventGoerId } }
-      await Promise.all(tickets.map(async(ticket)=>{return await Ticket.findByIdAndUpdate(ticket.split(" ")[0], updateForTicket)}))
-      // The user would have a property(ticket) that shows the type of ticket he bought and the quantity for each, it will be an array i.e ["Regular_ticket_id 2", "vvip_ticket_id 1", "Vip_ticket_id 2"]
-    await Promise.all(tickets.map(async(ticket)=>{return await EventGoer.findByIdAndUpdate(eventGoerId,{"$push": {"tickets": ticket}} )}))
+//      From the metadata gotten from the response we get the EventGoerId and add it o the ticket model
+//     then we update the ticket array in the EventGoer model with the ticket id and number eg const tickets = [{Name: "Anagu Chidiebere Andrew",  Email: "Anaguchidiebere@gmail.com",	TicketId: 26613137379317 },{Name: "Adibe Chukwuemeka Joshua" ,  Email: "chukwuemeka@gmail.com",	TicketId: 26613137379317},{Name: "Edeh Johnpaul Chukwuemeka",  Email:  "Edehjohnpaul@gmail.com", TicketId: 26613137379317 },{Name: "Ogbu Vincent",  Email: "VincentOgbu@gmail.com",	TicketId: 26613137379317},]
+    const {data, eventGoerId} = response.data.data.metadata
+    const {name, email, ticketId} = data
+    const Ticketreference = "bbsh debdbeduendunend"
+    const qrcode = 'https://res.cloudinary.com/dussvilm5/image/upload/v1717776412/QR%20codes/Chidiebere2829.png'
+    
+    //Update the TicketReference model 
+    const TicketReference = await TicketReferenceModel.create({EventGoerID: eventGoerId, TicketID: ticketId,name,email, qrcode, reference:Ticketreference, DateOfPurchase: Date.now()})
 
        /* sample of code to extract details
     let tickets = ["Regular_ticket_id 2", "vvip_ticket_id 1", "Vip_ticket_id 2"]
