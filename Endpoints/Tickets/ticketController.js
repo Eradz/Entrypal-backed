@@ -49,7 +49,7 @@ const createTicket =  AsyncHandler( async(req, res) =>{
 // route POST
 const ticketPayment = AsyncHandler(async(req,res) =>{
     const {eventGoerId} = req.params
-    const {data} = req.body
+    const {data, totalAmount} = req.body
     // const ticket = Ticket.findById(ticketId)
     const eventGoer = await EventGoer.findById(eventGoerId)
     // tickets in the req.body is an array of strings bearing the ticket ids(if he bought more than 1) and quantity bought
@@ -80,14 +80,17 @@ const verifyPayment = AsyncHandler(async(req,res)=>{
     }
 //      From the metadata gotten from the response we get the EventGoerId and add it o the ticket model
 //     then we update the ticket array in the EventGoer model with the ticket id and number eg const tickets = [{Name: "Anagu Chidiebere Andrew",  Email: "Anaguchidiebere@gmail.com",	TicketId: 26613137379317 },{Name: "Adibe Chukwuemeka Joshua" ,  Email: "chukwuemeka@gmail.com",	TicketId: 26613137379317},{Name: "Edeh Johnpaul Chukwuemeka",  Email:  "Edehjohnpaul@gmail.com", TicketId: 26613137379317 },{Name: "Ogbu Vincent",  Email: "VincentOgbu@gmail.com",	TicketId: 26613137379317},]
+    const {paid_at} = response.data.data
     const {data, eventGoerId} = response.data.data.metadata
-    const {name, email, ticketId} = data
     const Ticketreference = "bbsh debdbeduendunend"
     const qrcode = 'https://res.cloudinary.com/dussvilm5/image/upload/v1717776412/QR%20codes/Chidiebere2829.png'
     
     //Update the TicketReference model 
-    const TicketReference = await TicketReferenceModel.create({EventGoerID: eventGoerId, TicketID: ticketId,name,email, qrcode, reference:Ticketreference, DateOfPurchase: Date.now()})
-
+    const dataArray =data.map(async({name, email, TicketId})=> {
+        const TicketReference = await TicketReferenceModel.create({EventGoerID: eventGoerId, TicketID: TicketId, name, email, qrcode, reference:Ticketreference, DateOfPurchase: paid_at})
+        return TicketReference
+    })
+    res.status(200).json({message: dataArray})
        /* sample of code to extract details
     let tickets = ["Regular_ticket_id 2", "vvip_ticket_id 1", "Vip_ticket_id 2"]
 const ticket_details = tickets.map((ticket,i)=>{
@@ -120,7 +123,7 @@ VM702:11 User bought 2 Regular_ticket_id, 1 vvip_ticket_id, 2 Vip_ticket_id
   currency: 'NGN',
   ip_address: '102.88.84.228',
   metadata: {
-    tickets: "['regular_Ticket_id 2, vip_Ticket_id 2']",
+    data: "['regular_Ticket_id 2, vip_Ticket_id 2']",
     eventGoerId: '665c6218a9e308166a5a67ff'
   },
   log: {
