@@ -8,7 +8,6 @@ const EventCreatorsRoute = require('./Endpoints/Authentication/EventCreators/Rou
 const port = process.env.PORT
 const EventRoute = require("./Endpoints/Events/eventRoute.js")
 const TicketRoute = require("./Endpoints/Tickets/ticketRoute.js")
-// const PaymentRoute = require("./utils/ticketPayment.js")
 const cors = require("cors")
 const path = require('node:path')
 const passport = require("passport")
@@ -40,6 +39,8 @@ app.get("/", (req, res)=>{
     //  res.send("welcome")
      res.render("example")
 })
+
+
 app.get("/onsignup", (req, res)=>{
     //  res.send("welcome")
     sendEmail("anaguchidiebere@gmail.com", "chidi", "OnTicketPurchase", "content")

@@ -5,7 +5,7 @@ const ticketPayment = async(email, amount, metadata)=>{
     const secretKey = process.env.PAYSTACK_SECRET_KEY
     const reference = Date.now()
     const data = {
-        email:email, 
+        email, 
         amount: amount * 100, 
         APIkey,
         metadata: JSON.stringify(metadata),
@@ -17,8 +17,6 @@ const ticketPayment = async(email, amount, metadata)=>{
     'Authorization': `Bearer ${secretKey}`
     }
   } )
-  console.log(reference);
-  console.log(response)
    return (response.data.data.authorization_url)
 }
 

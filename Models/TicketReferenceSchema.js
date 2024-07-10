@@ -29,7 +29,7 @@ const TicketReference = new schema({
         required: true,
     },
     InAttendance:{
-        type: String,
+        type: Boolean,
         default: false
     },
     DateOfPurchase:{
