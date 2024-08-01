@@ -80,7 +80,7 @@
     </p>
     <div class="otp-box">
       <p class="otp"> content </p>
-      <img  src="/assets/Copy.png" alt="Click to copy" onclick="copyToClipboard()"></img>
+      <a target="_blank" rel="noopener noreferrer"><img  src="/assets/Copy.png" alt="Click to copy" onclick="copyToClipboard()"></img></a>
       <form id="register" method="post" action="/api/ticket/initializepayment/665c6218a9e308166a5a67ff">    
         <label><b>total amount     
         </b>    
@@ -117,13 +117,16 @@
     </div>
     <script>
       function copyToClipboard(){
-        // let content = 'hello'
-        // navigator.clipboard.writeText(content)
-        // alert("Copied: " + content)
-        fetch('http://localhost:5000/api/ticket/initializepayment/665c6218a9e308166a5a67ff', {
-	method: 'POST'
-})
+        let content = 'hello'
+        navigator.clipboard.writeText(content)
+        alert("Copied: " + content)
       }
     </script>
+    <%   function copyToClipboard(){
+      let content = 'hello'
+      navigator.clipboard.writeText(content)
+      alert("Copied: " + content)
+    }%>
+     
   </body>
 </html>

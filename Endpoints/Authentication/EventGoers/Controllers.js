@@ -2,7 +2,7 @@ const User = require("../../../Models/eventGoersSchema")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const AsyncHandler = require("express-async-handler")
-const { sendEmail } = require("../../../utils/sendEmail")
+const { otpEmail } = require("../../../utils/sendEmail")
 
 
 //@desc sign-up controller for eventGoers
@@ -21,7 +21,7 @@ const signupControllerEventGoers =  AsyncHandler(async(req,res)=>{
     }
     if(!user){
     const otp =  Math.floor(1000 + Math.random() * 9000)
-    sendEmail(email, fullname, 'Verify Email', otp )
+    otpEmail(email, fullname, 'Verify Email', otp )
     const securePassword = await bcrypt.hash(password, 10)  
     const secureotp = await bcrypt.hash(otp.toString(), 10)  
     const user = await User.create({username, fullname, email, password: securePassword, phoneNumber, reference, location, otp:secureotp})

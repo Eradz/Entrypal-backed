@@ -29,7 +29,7 @@
        letter-spacing: 10px;
       }
       .otp-box img{
-       margin-top: auto;
+       margin-top: 5px;
        margin-bottom: auto;
        width: 25px;
        height: 25px;
@@ -78,11 +78,11 @@
       Please use the code below to verify your account. This code is valid for
       30 mins.
     </p>
-    <div class="otp-box">
-      <p class="otp"> <%= content %>  <img src="cid:copy" alt="Click to copy" onclick="copyToClipboard()"/></p>
+    <div class="otp-box" style="display: flex; justify-content: center; ">
+      <p class="otp" style="margin:auto; background-color: #F5F5F5; padding: 10px 20px; font-weight: 500; font-size: 42px; border-radius: 17px;"> <%= content %></p>
     </div>
     <div class="let-us-know">
-      <p>Please if this wasnt you, Please ignore this message or <a href="www.entrypalapp.com">let us know</a></p>
+      <p>Please if this wasn't you, Please ignore this message or <a href="www.entrypalapp.com">let us know</a></p>
     </div>
     <img class="logo_image" src="cid:logo" alt="Entrypal_logo"/>
     <div class="social_icons">

@@ -16,7 +16,7 @@ const transport = nodemailer.createTransport({
     // pass: 'EntryPalNotifications2000$'
   }
 });
-const directory = paths.join( __dirname, "../views/welcome.ejs")
+const directory = paths.join( __dirname, "../views/token.ejs")
 const logoDir = paths.join( __dirname, "../public/assets/Logo.png")
 const headerDir = paths.join( __dirname, "../public/assets/Header.png")
 const frameDir = paths.join( __dirname, "../public/assets/Frame.png")
@@ -25,7 +25,7 @@ const githubDir = paths.join( __dirname, "../public/assets/mdi_github.png")
 const twitterDir = paths.join( __dirname, "../public/assets/ri_twitter-fill.png")
 const instagramDir = paths.join( __dirname, "../public/assets/ri_instagram-line.png")
 const linkedinDir = paths.join( __dirname, "../public/assets/mdi_linkedin.png")
-const sendEmail = (receiver, name, subject, content) => {
+const otpEmail = (receiver, name, subject, content) => {
   ejs.renderFile(
     directory,
     { content, name },
@@ -48,11 +48,6 @@ const sendEmail = (receiver, name, subject, content) => {
             filename:"Header.png",
             path: headerDir,
             cid: "header"
-          },
-            {
-            filename:"Copy.png",
-            path: copyDir,
-            cid: "copy"
           },
             {
             filename:"ri_instagram-line.png",
@@ -94,6 +89,6 @@ const sendEmail = (receiver, name, subject, content) => {
 };
 
 module.exports = {
-  sendEmail,
+  otpEmail,
 };
 
