@@ -51,6 +51,10 @@ const EventCreators = new Schema({
     ID_Number:{
         type: String,
         required: [true, "Please enter ID Number"]
+    },
+    username:{
+        type: String,
+        required: [true, "Please enter Preferred Name"]
     }
 },{
     timestamps: true
