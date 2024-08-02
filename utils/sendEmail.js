@@ -84,11 +84,8 @@ const sendEmail = (receiver, name, subject, content, directory) => {
     }
   );
 };
-const otpEmail = (receiver, name, subject, content, directory) => {sendEmail(receiver, name, subject, content, directory)}
-const EventGoerSignupEmail = (receiver, name, subject, content, directory) => {sendEmail(receiver, name, subject, content, directory)}
 
 module.exports = {
-  otpEmail,
-  EventGoerSignupEmail
+  sendEmail
 };
 

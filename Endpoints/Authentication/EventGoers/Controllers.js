@@ -3,7 +3,7 @@ const paths = require("path")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const AsyncHandler = require("express-async-handler")
-const { otpEmail, EventGoerSignupEmail } = require("../../../utils/sendEmail")
+const { sendEmail  } = require("../../../utils/sendEmail")
 
 
 //@desc sign-up controller for eventGoers
@@ -23,7 +23,7 @@ const signupControllerEventGoers =  AsyncHandler(async(req,res)=>{
     if(!user){
     const otp =  Math.floor(1000 + Math.random() * 9000)
     const tokendirectory = paths.join( __dirname, "../../../views/token.ejs")
-    otpEmail(email, fullname, 'Verify Email', otp,  tokendirectory)
+    sendEmail(email, fullname, 'Verify Email', otp,  tokendirectory)
     const securePassword = await bcrypt.hash(password, 10)  
     const secureotp = await bcrypt.hash(otp.toString(), 10)  
     const user = await User.create({username, fullname, email, password: securePassword, phoneNumber, reference, location, otp:secureotp})
@@ -46,7 +46,7 @@ const signupControllerEventGoers =  AsyncHandler(async(req,res)=>{
     user.verified = true
     user.otp = ''
     await user.save()
-    EventGoerSignupEmail(user.email, user.fullname, "Welcome to Ticketing made easy", '',  paths.join( __dirname, "../../../views/EventGoerSignup.ejs"))
+    sendEmail(user.email, user.fullname, "Welcome to Ticketing made easy", '',  paths.join( __dirname, "../../../views/EventGoerSignup.ejs"))
     res.status(200).json({message: "User successfully verified"})
   })
   
