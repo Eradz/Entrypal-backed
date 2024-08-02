@@ -8,7 +8,7 @@ const emailValidator = require("../../../utils/emailValidator")
 
 //@desc sign-up controller for event Creators
 const signupControllerEventCreators =  AsyncHandler(async(req,res)=>{
-    const {type, Fullname, Email, Password, Phone_Number, Whatsapp_Number, Address, Bank_Name, Bank_AccountNumber, Bank_AccountName, ID_Type, ID_Number, username } = req.body
+    const {type, Fullname, Email, Password, Whatsapp_Number, Address, Bank_Name, Bank_AccountNumber, Bank_AccountName, ID_Type, ID_Number, username } = req.body
     const user =await EventCreator.findOne({Email});
     const emailTrue = emailValidator(Email)
     if(!emailTrue){
@@ -17,7 +17,7 @@ const signupControllerEventCreators =  AsyncHandler(async(req,res)=>{
     }
     if(!user){
     const securePassword = await bcrypt.hash(Password, 10)
-    const user = await EventCreator.create({type, Fullname, Email, Password: securePassword, Phone_Number, Whatsapp_Number, Address, Bank_Name, Bank_AccountNumber, Bank_AccountName, ID_Type, ID_Number, username})
+    const user = await EventCreator.create({type, Fullname, Email, Password: securePassword, Whatsapp_Number, Address, Bank_Name, Bank_AccountNumber, Bank_AccountName, ID_Type, ID_Number, username})
     res.status(201).json({message: "Event CREATOR Successfully created", User:{name: user.Fullname},emailTrue} )
     }else if(user){
       res.status(400);
