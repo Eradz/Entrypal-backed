@@ -38,7 +38,7 @@ passport.deserializeUser(function(user, done) {
 app.get("/", (req, res)=>{
     //  res.send("welcome")
     otpEmail("anaguchidiebere@gmail.com", "chidi", "Account Verification", "351885")
-    //  res.render("example")
+    //  res.render("EventGoerSignup")
 })
 
 

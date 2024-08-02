@@ -9,6 +9,8 @@
      }
      .header_image{
       margin-bottom: 20px;
+      width: 500px;
+      height: 200px;
      }
      a{
       text-decoration: none;
@@ -71,7 +73,7 @@
       margin-top: -3px;
     }
     </style>
-    <img class="header_image" src="cid:header" alt="Entrypal_Header"/>
+    <img class="header_image" src="cid:header" alt="Entrypal_Header" style="width: 500px; height: 200px;"/>
     <h3>Account verification</h3>
     <p>Hello <%= name %>;</p>
     <p class="class">
@@ -96,12 +98,5 @@
       <p>© Entrypal Apps Limited (RC 1889170) Awka,NG 420112</p>
       <p>Cancel Subscription</p>
     </div>
-    <script>
-      function copyToClipboard(){
-        let content = '<%-content%>'
-        navigator.clipboard.writeText(content)
-        alert("Copied: " + content)
-      }
-    </script>
   </body>
 </html>

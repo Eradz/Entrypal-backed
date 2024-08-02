@@ -14,7 +14,7 @@ passport.use(new GoogleStrategy({
         if(existingUser || existingUseremail){
          return  done(null, existingUser)
         } else{
-          const user = await EventGoer.create({fullname: displayName, googleId: id, email, username: given_name  })
+          const user = await EventGoer.create({fullname: displayName, googleId: id, email, username: given_name, verified: true })
           return done(null, user)
         }
   }

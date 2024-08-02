@@ -16,7 +16,8 @@ const transport = nodemailer.createTransport({
     // pass: 'EntryPalNotifications2000$'
   }
 });
-const directory = paths.join( __dirname, "../views/token.ejs")
+const tokendirectory = paths.join( __dirname, "../views/token.ejs")
+const EventGoerSignupdir = paths.join( __dirname, "../views/EventGoerSignup.ejs")
 const logoDir = paths.join( __dirname, "../public/assets/Logo.png")
 const headerDir = paths.join( __dirname, "../public/assets/Header.png")
 const frameDir = paths.join( __dirname, "../public/assets/Frame.png")
@@ -25,7 +26,8 @@ const githubDir = paths.join( __dirname, "../public/assets/mdi_github.png")
 const twitterDir = paths.join( __dirname, "../public/assets/ri_twitter-fill.png")
 const instagramDir = paths.join( __dirname, "../public/assets/ri_instagram-line.png")
 const linkedinDir = paths.join( __dirname, "../public/assets/mdi_linkedin.png")
-const otpEmail = (receiver, name, subject, content) => {
+
+const sendEmail = (receiver, name, subject, content, directory) => {
   ejs.renderFile(
     directory,
     { content, name },
@@ -40,14 +42,14 @@ const otpEmail = (receiver, name, subject, content) => {
           html: data,
           attachments:[
             {
-            filename:"Logo.png",
-            path: logoDir,
-            cid: "logo"
-          },
-            {
             filename:"Header.png",
             path: headerDir,
             cid: "header"
+          },
+            {
+            filename:"Logo.png",
+            path: logoDir,
+            cid: "logo"
           },
             {
             filename:"ri_instagram-line.png",
@@ -69,11 +71,6 @@ const otpEmail = (receiver, name, subject, content) => {
             path: githubDir,
             cid: "github"
           },
-        //   {
-        //   filename:"Frame.png",
-        //   path: frameDir,
-        //   cid: "frame"
-        // },
         ]
         };
 
@@ -87,8 +84,11 @@ const otpEmail = (receiver, name, subject, content) => {
     }
   );
 };
+const otpEmail = (receiver, name, subject, content, directory) => {sendEmail(receiver, name, subject, content, directory)}
+const EventGoerSignupEmail = (receiver, name, subject, content, directory) => {sendEmail(receiver, name, subject, content, directory)}
 
 module.exports = {
   otpEmail,
+  EventGoerSignupEmail
 };
 

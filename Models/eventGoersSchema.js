@@ -32,6 +32,10 @@ const EventGoer = new Schema({
     otp:{
         type: String
     },
+    verified:{
+        type: Boolean,
+        default: false
+    },
     tickets:{
         type: Array
     }

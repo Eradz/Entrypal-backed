@@ -1,8 +1,9 @@
 const User = require("../../../Models/eventGoersSchema")
+const paths = require("path")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const AsyncHandler = require("express-async-handler")
-const { otpEmail } = require("../../../utils/sendEmail")
+const { otpEmail, EventGoerSignupEmail } = require("../../../utils/sendEmail")
 
 
 //@desc sign-up controller for eventGoers
@@ -21,7 +22,8 @@ const signupControllerEventGoers =  AsyncHandler(async(req,res)=>{
     }
     if(!user){
     const otp =  Math.floor(1000 + Math.random() * 9000)
-    otpEmail(email, fullname, 'Verify Email', otp )
+    const tokendirectory = paths.join( __dirname, "../../../views/token.ejs")
+    otpEmail(email, fullname, 'Verify Email', otp,  tokendirectory)
     const securePassword = await bcrypt.hash(password, 10)  
     const secureotp = await bcrypt.hash(otp.toString(), 10)  
     const user = await User.create({username, fullname, email, password: securePassword, phoneNumber, reference, location, otp:secureotp})
@@ -31,10 +33,26 @@ const signupControllerEventGoers =  AsyncHandler(async(req,res)=>{
       res.status(400);
       throw new Error("User already exists")
     }
-
-  
-  
   })
+
+  const verifyUser = AsyncHandler( async(req,res)=>{
+    const {id} = req.params
+    const {token} = req.body
+    const user = await User.findById(id)
+    const isVerified = await bcrypt.compare(token, user.otp) 
+     if(!isVerified){
+      throw new Error('Invalid token')
+    }
+    user.verified = true
+    user.otp = ''
+    await user.save()
+    EventGoerSignupEmail(user.email, user.fullname, "Welcome to Ticketing made easy", '',  paths.join( __dirname, "../../../views/EventGoerSignup.ejs"))
+    res.status(200).json({message: "User successfully verified"})
+  })
+  
+
+    
+  
 
   //@desc login controller for eventGoers
   const loginControllerEventGoers =  AsyncHandler(async(req,res)=>{
@@ -44,6 +62,9 @@ const signupControllerEventGoers =  AsyncHandler(async(req,res)=>{
       //   res.status(404).json({message: "Invalid username or password"})
       res.status(400);
       throw new Error("Invalid username or password")
+    }else if(!user.verified){
+      throw new Error("Invalid username or password")
+        // res.status(400).json({messae: "Invalid password"})
     }else if(user && await bcrypt.compare(password, user.password)){
         const accessToken = await jwt.sign({user}, process.env.JWT_SECRET, {expiresIn: "7d"})
         res.status(200).json({message: `Login Successful, welcome ${user.username}`, accessToken})
@@ -64,4 +85,4 @@ const deleteEventGoer = AsyncHandler(async(req,res)=>{
 })
 
 
-module.exports = {signupControllerEventGoers, loginControllerEventGoers, getAllEventGoers ,deleteEventGoer}
+module.exports = {signupControllerEventGoers, loginControllerEventGoers, getAllEventGoers ,deleteEventGoer, verifyUser}
