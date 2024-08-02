@@ -14,9 +14,9 @@ const EventCreators = new Schema({
         type: String,
         required: [true, "Please enter your Email"]
     },
-    Phone_Number:{
+    Whatsapp_Number:{
         type: String,
-        required: [true, "Please enter your Phone Number"]
+        required: [true, "Please enter your Whatsapp Number"]
     },
     Password:{
         type: String,
