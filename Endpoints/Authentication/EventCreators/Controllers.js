@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const AsyncHandler = require("express-async-handler")
 const emailValidator = require("../../../utils/emailValidator")
+const { sendEmail } = require("../../../utils/sendEmail")
 
 
 
@@ -18,6 +19,7 @@ const signupControllerEventCreators =  AsyncHandler(async(req,res)=>{
     if(!user){
     const securePassword = await bcrypt.hash(Password, 10)
     const user = await EventCreator.create({type, Fullname, Email, Password: securePassword, Whatsapp_Number, Address, Bank_Name, Bank_AccountNumber, Bank_AccountName, ID_Type, ID_Number, username})
+    sendEmail(user.Email, user.Fullname, "Approved as an eventcreator!", '', paths.join( __dirname, "../../../views/EventCreatorSignup.ejs"))
     res.status(201).json({message: "Event CREATOR Successfully created", User:{name: user.Fullname},emailTrue} )
     }else if(user){
       res.status(400);

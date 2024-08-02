@@ -16,8 +16,6 @@ const transport = nodemailer.createTransport({
     // pass: 'EntryPalNotifications2000$'
   }
 });
-const tokendirectory = paths.join( __dirname, "../views/token.ejs")
-const EventGoerSignupdir = paths.join( __dirname, "../views/EventGoerSignup.ejs")
 const logoDir = paths.join( __dirname, "../public/assets/Logo.png")
 const headerDir = paths.join( __dirname, "../public/assets/Header.png")
 const frameDir = paths.join( __dirname, "../public/assets/Frame.png")

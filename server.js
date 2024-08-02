@@ -37,8 +37,8 @@ passport.deserializeUser(function(user, done) {
 });
 app.get("/", (req, res)=>{
     //  res.send("welcome")
-    sendEmail("anaguchidiebere@gmail.com", "chidi", "Account Verification", "351885")
-    //  res.render("EventGoerSignup")
+    // sendEmail("anaguchidiebere@gmail.com", "chidi", "Account Verification", "351885")
+     res.render("EventGoerSignup")
 })
 
 
