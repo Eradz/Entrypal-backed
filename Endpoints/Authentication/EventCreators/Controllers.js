@@ -1,6 +1,7 @@
 const EventCreator = require("../../../Models/eventCreatorsSchema")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
+const paths = require("path")
 const AsyncHandler = require("express-async-handler")
 const emailValidator = require("../../../utils/emailValidator")
 const { sendEmail } = require("../../../utils/sendEmail")
