@@ -8,6 +8,7 @@ const EventCreatorsRoute = require('./Endpoints/Authentication/EventCreators/Rou
 const port = process.env.PORT
 const EventRoute = require("./Endpoints/Events/eventRoute.js")
 const TicketRoute = require("./Endpoints/Tickets/ticketRoute.js")
+const ForgotPasswordRoute = require("./Endpoints/Authentication/ForgotPassword/forgotPassword.js")
 const cors = require("cors")
 const path = require('node:path')
 const passport = require("passport")
@@ -68,6 +69,7 @@ app.use('/api/goer', EventGoerRoute )
 app.use('/api/creator', EventCreatorsRoute )
 app.use('/api/event', EventRoute)
 app.use('/api/ticket', TicketRoute)
+app.use('/api/forgotpassword', ForgotPasswordRoute)
 // app.use('/api/payment', PaymentRoute)
 
 
@@ -78,7 +80,7 @@ app.get('/auth/google/callback',
 passport.authenticate('google', {
     failureRedirect: '/login'
   }), (req,res)=>{
-    res.redirect("https://www.entrypalapp.com")
+    res.redirect(`https://www.entrypalapp.com/?id=${req.user._id}`)
   })
 
 

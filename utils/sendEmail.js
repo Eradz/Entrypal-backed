@@ -28,7 +28,7 @@ const linkedinDir = paths.join( __dirname, "../public/assets/mdi_linkedin.png")
 const sendEmail = (receiver, name, subject, content, directory) => {
   ejs.renderFile(
     directory,
-    { content, name },
+    { content, name, subject },
     (err, data) => {
       if (err) {
         console.log(err);

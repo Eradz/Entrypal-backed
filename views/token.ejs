@@ -1,89 +1,15 @@
-<body>
-    <style>
-      body { 
-       display: flex;
-       flex-direction: column;
-     }
-     h3{
-      margin: auto;
-     }
-     .header_image{
-      margin-bottom: 20px;
-      width: 500px;
-      height: 200px;
-     }
-     a{
-      text-decoration: none;
-      text-decoration-color: none;
-     }
-     .otp-box{
-       display: flex;
-       justify-content: center;
-       align-items: center;
-       gap: 10px;
-      }
-      .otp{
-       font-size: 40px;
-       background-color: #F5F5F5;
-       width: 30%;
-       text-align: center;
-       border-radius: 10px;
-       letter-spacing: 10px;
-      }
-      .otp-box img{
-       margin-top: 5px;
-       margin-bottom: auto;
-       width: 25px;
-       height: 25px;
-      }
-      .otp-box img:hover{
-        cursor: pointer;
-      }
-     .let-us-know{
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-bottom: 40px;
-     }
-     .logo_image{
-      margin: auto;
-      width: 18%;
-     }
-     .social_icons{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 50px;
-      gap:30px;
-     }
-     .icon_image{
-      width: 20px;
-      height: 20px;
-     }
-     .footer{
-      display: flex;
-      flex-direction: column;
-      text-align: center;
-      font-size: 10px;
-      gap: -10px;
-      margin-top: 20px;
-      margin-bottom: 40px;
-     }
-     .footer p{
-      margin-top: -3px;
-    }
-    </style>
-    <img class="header_image" src="cid:header" alt="Entrypal_Header" style="width: 500px; height: 200px;"/>
-    <h3>Account verification</h3>
-    <p>Hello <%= name %>;</p>
-    <p class="class">
+<body style=" width: 95%; margin: auto; text-align: center;">
+    <img class="header_image" src="cid:header" alt="Entrypal_Header" style="width: 500px; height: 200px; margin: auto;"/>
+    <h3> <%= subject %> </h3>
+    <p style="text-align: left;">Hello <%= name %>;</p>
+    <p class="class" style="text-align: left;">
       Please use the code below to verify your account. This code is valid for
       30 mins.
     </p>
     <div class="otp-box" style="display: flex; justify-content: center; ">
       <p class="otp" style="margin:auto; background-color: #F5F5F5; padding: 10px 20px; font-weight: 500; font-size: 42px; border-radius: 17px;"> <%= content %></p>
     </div>
-    <div class="let-us-know">
+    <div class="let-us-know" style="text-align: left;">
       <p>Please if this wasn't you, Please ignore this message or <a href="www.entrypalapp.com">let us know</a></p>
     </div>
     <img class="logo_image" src="cid:logo" alt="Entrypal_logo"/>

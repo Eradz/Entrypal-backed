@@ -23,7 +23,7 @@ const signupControllerEventGoers =  AsyncHandler(async(req,res)=>{
     if(!user){
     const otp =  Math.floor(1000 + Math.random() * 9000)
     const tokendirectory = paths.join( __dirname, "../../../views/token.ejs")
-    sendEmail(email, fullname, 'Verify Email', otp,  tokendirectory)
+    sendEmail(email, fullname, 'Account Verification', otp,  tokendirectory)
     const securePassword = await bcrypt.hash(password, 10)  
     const secureotp = await bcrypt.hash(otp.toString(), 10)  
     const user = await User.create({username, fullname, email, password: securePassword, phoneNumber, reference, location, otp:secureotp})
