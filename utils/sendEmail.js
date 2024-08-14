@@ -10,10 +10,10 @@ const transport = nodemailer.createTransport({
   port: 587,
   secure: false, // upgrade later with STARTTLS
   auth: {
-    user: 'anaguchidiebere@gmail.com',
-    pass: 'fyig vyip llqy pexo'
-    // user: 'notifications@entrypalapp.com',
-    // pass: 'EntryPalNotifications2000$'
+    // user: 'entrypalapp@gmail.com',
+    // pass: 'fyig vyip llqy pexo'
+    user: process.env.ENTRYPAL_EMAIL,
+    pass: process.env.ENTRYPAL_EMAIL_PASSWORD
   }
 });
 const logoDir = paths.join( __dirname, "../public/assets/Logo.png")
