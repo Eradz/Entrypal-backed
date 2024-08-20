@@ -7,11 +7,9 @@ require("dotenv").config();
 const transport = nodemailer.createTransport({
   service: 'gmail',
   host: "smtp.forwardemail.net",
-  port: 587,
-  secure: false, // upgrade later with STARTTLS
+  port: 465,
+  secure: true,
   auth: {
-    // user: 'entrypalapp@gmail.com',
-    // pass: 'fyig vyip llqy pexo'
     user: process.env.ENTRYPAL_EMAIL,
     pass: process.env.ENTRYPAL_EMAIL_PASSWORD
   }
@@ -28,7 +26,7 @@ const linkedinDir = paths.join( __dirname, "../public/assets/mdi_linkedin.png")
 const sendEmail = (receiver, name, subject, content, directory) => {
   ejs.renderFile(
     directory,
-    { content, name, subject },
+    { content, name },
     (err, data) => {
       if (err) {
         console.log(err);
@@ -76,7 +74,7 @@ const sendEmail = (receiver, name, subject, content, directory) => {
           if (error) {
             return console.log(error);
           }
-          console.log("Message sent: %s", info.messageId);
+          console.log("Message sent: %s", info);
         });
       }
     }
