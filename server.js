@@ -40,22 +40,13 @@ app.get("/", (req, res)=>{
      res.send("welcome")
 })
 
-
-app.get("/onsignup", (req, res)=>{
-    //  res.send("welcome")
-     res.render("OnTicketPurchase")
-})
 app.get('/qrcode', async(req,res)=>{
   const result = await qrCodeGenerator("Chidiebere")
   res.send(result)
 })
-app.get("/success", (req, res)=>{
-    //  res.send("welcome")
-    res.redirect("https://www.entrypalapp.com")
-})
+
 app.get("/login", (req, res)=>{
-    //  res.send("welcome")
-     res.redirect("https://google.com")
+     res.redirect("https://www.entrypalapp.com/authentication/login")
 })
 app.get("/logout",(req,res)=>{
   req.logout(function(err) {
@@ -78,7 +69,7 @@ app.get('/auth/google/callback',
 passport.authenticate('google', {
     failureRedirect: '/login'
   }), (req,res)=>{
-    res.redirect(`https://www.entrypalapp.com/?id=${req.user._id}`)
+    res.redirect(`https://www.entrypalapp.com/dashboard/${req.user._id}`)
   })
 
 

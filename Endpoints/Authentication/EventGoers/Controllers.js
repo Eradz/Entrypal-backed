@@ -5,6 +5,20 @@ const jwt = require("jsonwebtoken")
 const AsyncHandler = require("express-async-handler")
 const { sendEmail  } = require("../../../utils/sendEmail")
 
+//@desc Get all Event Goers
+const getAllEventGoers = AsyncHandler(async(req,res)=>{
+const users = await User.find()
+res.status(200).json({message: users})
+})
+//@desc Get single Event Goers
+const getSingleEventGoers = AsyncHandler(async(req,res)=>{
+  const {id} = req.params
+const user = await User.findById(id)
+if(!user){
+  res.status(400).json({message: "No user found"})
+}
+res.status(200).json({message: user})
+})
 
 //@desc sign-up controller for eventGoers
 const signupControllerEventGoers =  AsyncHandler(async(req,res)=>{
@@ -67,15 +81,10 @@ const signupControllerEventGoers =  AsyncHandler(async(req,res)=>{
         // res.status(400).json({messae: "Invalid password"})
     }else if(user && await bcrypt.compare(password, user.password)){
         const accessToken = await jwt.sign({user}, process.env.JWT_SECRET, {expiresIn: "7d"})
-        res.status(200).json({message: `Login Successful, welcome ${user.username}`, accessToken})
+        res.status(200).json({message: `Login Successful, welcome ${user.username}`, accessToken, userId: user._id})
     }
   })
 
-  //@desc Get all Event Goers
-const getAllEventGoers = AsyncHandler(async(req,res)=>{
-  const users = await User.find()
-  res.status(200).json({message: users})
-})
 
 //@desc Delete a particular Eveng Goer
 const deleteEventGoer = AsyncHandler(async(req,res)=>{
@@ -85,4 +94,4 @@ const deleteEventGoer = AsyncHandler(async(req,res)=>{
 })
 
 
-module.exports = {signupControllerEventGoers, loginControllerEventGoers, getAllEventGoers ,deleteEventGoer, verifyUser}
+module.exports = {signupControllerEventGoers, loginControllerEventGoers, getAllEventGoers, getSingleEventGoers, deleteEventGoer, verifyUser}
