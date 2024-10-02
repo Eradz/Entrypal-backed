@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const AsyncHandler = require("express-async-handler")
 const { sendEmail  } = require("../../../utils/sendEmail")
+const {sendCookies} = require("../../../utils/cookies")
 
 //@desc Get all Event Goers
 const getAllEventGoers = AsyncHandler(async(req,res)=>{
@@ -12,12 +13,16 @@ res.status(200).json({message: users})
 })
 //@desc Get single Event Goers
 const getSingleEventGoers = AsyncHandler(async(req,res)=>{
-  const {id} = req.params
-const user = await User.findById(id)
-if(!user){
-  res.status(400).json({message: "No user found"})
-}
-res.status(200).json({message: user})
+const {accesstoken, GIId} = req.cookies
+      if(!accesstoken || !GIId){
+        res.status(401).json({message: 'No access token'})
+      }
+      const verifyAccessToken = jwt.verify(accesstoken || GIId, process.env.JWT_SECRET)
+      const userId = verifyAccessToken.userId
+      const user = await User.findById(userId).select(['-password'])
+      const allUsers = await User.find().select(['-password'])
+      if(!user){res.status(400).json({message: "User is not Authorized", response: verifyAccessToken})}
+        res.status(200).json({message: user})
 })
 
 //@desc sign-up controller for eventGoers
@@ -80,7 +85,8 @@ const signupControllerEventGoers =  AsyncHandler(async(req,res)=>{
       throw new Error("Invalid username or password")
         // res.status(400).json({messae: "Invalid password"})
     }else if(user && await bcrypt.compare(password, user.password)){
-        const accessToken = await jwt.sign({user}, process.env.JWT_SECRET, {expiresIn: "7d"})
+        const accessToken = await jwt.sign({userId: user._id}, process.env.JWT_SECRET, {expiresIn: "7d"})
+        sendCookies("accesstoken", accessToken, res)
         res.status(200).json({message: `Login Successful, welcome ${user.username}`, accessToken, userId: user._id})
     }
   })

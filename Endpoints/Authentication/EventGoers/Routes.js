@@ -12,7 +12,7 @@ route.post("/signup", signupControllerEventGoers)
 route.post("/login", loginControllerEventGoers)
 route.post("/verifyotp/:id", verifyUser)
 route.get("/users", getAllEventGoers)
-route.get("/user/:id", getSingleEventGoers)
+route.get("/user", getSingleEventGoers)
 route.delete("/deleteuser/:id", deleteEventGoer)
 
 

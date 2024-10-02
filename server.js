@@ -1,5 +1,6 @@
 const express = require("express")
 const app = express()
+const cookieParser = require("cookie-parser")
 const errorHandler = require("./Middleware/errorHandler.js")
 const dotenv = require("dotenv").config()
 const connectdb = require('./db.js')
@@ -15,12 +16,14 @@ const passport = require("passport")
 const session = require('express-session')
 const qrCodeGenerator = require("./utils/QRcode.js")
 const {sendEmail} = require("./utils/sendEmail.js")
-
+const { sendCookies } = require("./utils/cookies.js")
+const jwt = require("jsonwebtoken")
 app.set("view engine", "ejs");
 connectdb()
 app.use(cors())
 app.use(express.json({limit: '50mb'}))
 app.use(express.urlencoded({limit: '50mb', extended: true}));
+app.use(cookieParser())
 app.use(express.static("public")); 
 app.use(session({
   secret: 'suii',
@@ -64,15 +67,13 @@ app.use('/api/forgotpassword', ForgotPasswordRoute)
 
 require('./utils/googleAuthenticate.js')
 app.get('/auth/google',passport.authenticate('google', { scope:[ 'email', 'profile' ] }));
-
 app.get('/auth/google/callback', 
 passport.authenticate('google', {
     failureRedirect: '/login'
   }), (req,res)=>{
-    res.redirect(`https://www.entrypalapp.com/dashboard/${req.user._id}`)
+    sendCookies('GIId', jwt.sign({userId: req.user._id}, process.env.JWT_SECRET), {expiresIn: "7d"}, res )
+    res.redirect(`https://www.entrypalapp.com/dashboard`)
   })
-
-
 app.use(errorHandler)
 app.listen(`${port}`, ()=>{
     console.log(`app running on port ${port}`)
