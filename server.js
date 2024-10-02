@@ -70,8 +70,8 @@ app.get('/auth/google',passport.authenticate('google', { scope:[ 'email', 'profi
 app.get('/auth/google/callback', 
 passport.authenticate('google', {
     failureRedirect: '/login'
-  }), (req,res)=>{
-    sendCookies('GIId', jwt.sign({userId: req.user._id}, process.env.JWT_SECRET), {expiresIn: "7d"}, res )
+  }), async(req,res)=>{
+    sendCookies('accesstoken', await jwt.sign({userId: req.user._id}, process.env.JWT_SECRET, {expiresIn: "7d"}), res)
     res.redirect(`https://www.entrypalapp.com/dashboard`)
   })
 app.use(errorHandler)

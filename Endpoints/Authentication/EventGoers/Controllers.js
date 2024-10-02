@@ -13,11 +13,11 @@ res.status(200).json({message: users})
 })
 //@desc Get single Event Goers
 const getSingleEventGoers = AsyncHandler(async(req,res)=>{
-const {accesstoken, GIId} = req.cookies
-      if(!accesstoken || !GIId){
+const {accesstoken} = req.cookies
+      if(!accesstoken){
         res.status(401).json({message: 'No access token'})
       }
-      const verifyAccessToken = jwt.verify(accesstoken || GIId, process.env.JWT_SECRET)
+      const verifyAccessToken = jwt.verify(accesstoken, process.env.JWT_SECRET)
       const userId = verifyAccessToken.userId
       const user = await User.findById(userId).select(['-password'])
       const allUsers = await User.find().select(['-password'])
