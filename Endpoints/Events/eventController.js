@@ -8,7 +8,7 @@ const createEvent = AsyncHandler(async(req, res) =>{
    const creator_id = req.params.id
    const user = await eventCreators.findById(creator_id)
    if(!user){
-      res.status(400)
+      res.status(401)
       throw new Error("Event Creator does not exist")
    }else{
       const event = await Event.create({Event_creator_id: creator_id, Event_name, Description,Event_category, Time,Address,Socials, Primary_flier, Secondary_fliers})

@@ -12,11 +12,11 @@ route.post("/", AsyncHandler(async(req,res)=>{
     const {email} = req.body
 
     if(!email){
-        res.status(400).json({message: "Please enter Email"})
+        res.status(401).json({message: "Please enter Email"})
     }
     const eventgoer = await EventGoer.findOne({email})
     if(!eventgoer){
-        res.status(400).json({message: "User does not exist"})
+        res.status(401).json({message: "User does not exist"})
     }
     else{
         const otp =  Math.floor(1000 + Math.random() * 9000)

@@ -14,7 +14,7 @@ const signupControllerEventCreators =  AsyncHandler(async(req,res)=>{
     const user =await EventCreator.findOne({Email});
     const emailTrue = emailValidator(Email)
     if(!emailTrue){
-      res.status(400);
+      res.status(401);
       throw new Error("please enter a valid Email")
     }
     if(!user){
@@ -23,7 +23,7 @@ const signupControllerEventCreators =  AsyncHandler(async(req,res)=>{
     sendEmail(user.Email, user.Fullname, "Approved as an eventcreator!", '', paths.join( __dirname, "../../../views/EventCreatorSignup.ejs"))
     res.status(201).json({message: "Event CREATOR Successfully created", User:{name: user.Fullname},emailTrue} )
     }else if(user){
-      res.status(400);
+      res.status(401);
       throw new Error("User already exists")
     }
   })
@@ -33,7 +33,7 @@ const loginControllerEventCreators =  AsyncHandler(async(req,res)=>{
     const {Email, Password} = req.body
     const user = await EventCreator.findOne({Email})
     if(!user){
-      res.status(400);
+      res.status(401);
       throw new Error("Invalid username or Password")
     }else if(user && await bcrypt.compare(Password, user.Password)){
         const accessToken = await jwt.sign({user}, process.env.JWT_SECRET, {expiresIn: "7d"})

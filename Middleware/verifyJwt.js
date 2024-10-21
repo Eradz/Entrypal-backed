@@ -9,13 +9,13 @@ const verifyJwt = (req,res,next) =>{
         token = header.split(" ")[1]
         jwt.verify(token, process.env.JWT_SECRET, (err, decoded)=>{
             if(err){
-                res.status(400).json({message: "Invalid token or Token expired"})
+                res.status(401).json({message: "Invalid token or Token expired"})
             } else{
                 res.status(200).json({message: decoded})
             }
         })
     }else{
-       res.status(400).json({message: "Headers not set"})
+       res.status(401).json({message: "Headers not set"})
     }
 }
 

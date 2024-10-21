@@ -35,11 +35,11 @@ const createTicket =  AsyncHandler( async(req, res) =>{
         return ticket.Ticket_name === Ticket_name ? true : false
     }).includes(true)
     if(!event){
-        res.status(400)
+        res.status(401)
         throw new Error("Event does not exist")
     } 
     if(ticketExist){
-        res.status(400)
+        res.status(401)
         throw new Error("A Ticket with this name already exists for this event")
     }
        const created_ticket = await Ticket.create({Event_id: id, Ticket_name, Price, Features, Quantity})
@@ -73,7 +73,7 @@ const verifyPayment = AsyncHandler(async(req,res)=>{
         }
     })
     if(response.data.data.status !== "success"){
-        res.status(400).json({message: "Payment Failed"})
+        res.status(401).json({message: "Payment Failed"})
     }
 //      From the metadata gotten from the response we get the EventGoerId and add it o the ticket model
 //     then we update the ticket array in the EventGoer model with the ticket id and number eg const tickets = [{Name: "Anagu Chidiebere Andrew",  Email: "Anaguchidiebere@gmail.com",	TicketId: 26613137379317 },{Name: "Adibe Chukwuemeka Joshua" ,  Email: "chukwuemeka@gmail.com",	TicketId: 26613137379317},{Name: "Edeh Johnpaul Chukwuemeka",  Email:  "Edehjohnpaul@gmail.com", TicketId: 26613137379317 },{Name: "Ogbu Vincent",  Email: "VincentOgbu@gmail.com",	TicketId: 26613137379317},]

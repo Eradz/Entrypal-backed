@@ -20,7 +20,7 @@ const { sendCookies } = require("./utils/cookies.js")
 const jwt = require("jsonwebtoken")
 app.set("view engine", "ejs");
 connectdb()
-app.use(cors())
+app.use(cors({credentials: true, origin: process.env.NODE_ENV === 'DEVELOPMENT' ? 'http://localhost:3000' : "https://www.entrypalapp.com" }))
 app.use(express.json({limit: '50mb'}))
 app.use(express.urlencoded({limit: '50mb', extended: true}));
 app.use(cookieParser())
@@ -72,7 +72,7 @@ passport.authenticate('google', {
     failureRedirect: '/login'
   }), async(req,res)=>{
     sendCookies('accesstoken', await jwt.sign({userId: req.user._id}, process.env.JWT_SECRET, {expiresIn: "7d"}), res)
-    res.redirect(`https://www.entrypalapp.com/dashboard`)
+    res.redirect(process.env.NODE_ENV === 'DEVELOPMENT' ? 'http://localhost:3000/dashboard' : "https://www.entrypalapp.com/dashboard" )
   })
 app.use(errorHandler)
 app.listen(`${port}`, ()=>{
